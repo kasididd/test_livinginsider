@@ -15,7 +15,9 @@
 body {
   font-family: var(--font-family-base);
 }
-
+.main-body {
+  height: 100vh;
+}
 /* Loan Card Styling */
 .loan-card {
   max-height: 28.25rem; /* 452px */
@@ -128,8 +130,11 @@ body {
 }
 
 /* Responsive Design */
-@media screen and (max-aspect-ratio: 1/2) {
+@media screen and (max-aspect-ratio: 1/1.5) {
   /* CSS สำหรับอุปกรณ์ที่มีอัตราส่วนความกว้าง/ความสูงน้อยกว่า 0.5 */
+  .main-body {
+    height: auto !important;
+  }
   .loan-card {
     min-height: 47.5625rem !important; /* 761px */
     justify-content: start;

@@ -6,7 +6,11 @@
     <title>Estimated Mortgage Calculator</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="./file/livinginsider_icon.webp" type="image/x-icon" />
+    <link
+      rel="icon"
+      href="./file/livinginsider_icon.webp"
+      type="image/x-icon"
+    />
 
     <!-- Bootstrap CSS CDN -->
     <link
@@ -38,10 +42,7 @@
   </head>
 
   <body>
-    <div
-      class="d-flex justify-content-center align-items-center"
-      style="height: 100vh"
-    >
+    <div class="d-flex main-body justify-content-center align-items-center">
       <div class="card loan-card p-4 card-style">
         <div class="d-flex justify-content-between flex-col top-height">
           <div class="start pt-4">
@@ -212,8 +213,8 @@
         // Format number with commas
         function formatNumber(value) {
           $res = value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          if($res == '') return '0';
-          return $res
+          if ($res == "") return "0";
+          return $res;
         }
 
         // Format number without commas
