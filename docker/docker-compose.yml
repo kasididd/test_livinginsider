@@ -31,6 +31,7 @@ services:
         dockerfile: Dockerfile
     environment: 
       TZ: Asia/Bangkok
+    restart: always
     ports:
      - 80:80
     volumes:
