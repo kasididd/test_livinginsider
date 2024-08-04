@@ -230,27 +230,39 @@
     <!-- server script -->
     <script>
       function saveCalculate() {
-        $("#formPropertyPrice").val(
-          $("#propertyPrice").val().replace(/,/g, "")
-        );
-        $("#formInterestRate").val($("#interestRate").val());
-        $("#formLoanTerm").val($("#loanTerm").val());
-        $("#formLoanAmount").val($("#loanAmount").text().replace(/,/g, ""));
-        $("#formMinimumIncome").val(
-          $("#minimumIncome").text().replace(/,/g, "")
-        );
-        $("#formMonthlyPayment").val(
-          $("#monthlyPayment").text().replace(/,/g, "")
-        );
-
-        $("#mortgageForm").submit();
+        var data = {
+          propertyPrice: $("#propertyPrice").val().replace(/,/g, ""),
+          interestRate: $("#interestRate").val(),
+          loanTerm: $("#loanTerm").val(),
+          loanAmount: $("#loanAmount").text().replace(/,/g, ""),
+          minimumIncome: $("#minimumIncome").text().replace(/,/g, ""),
+          monthlyPayment: $("#monthlyPayment").text().replace(/,/g, "")
+        };
+    
+        $.ajax({
+          url: $("#mortgageForm").attr("action"), // URL ของฟอร์ม
+          type: "POST",
+          data: data,
+          success: function(response) {
+            alert("Calculation saved successfully.");
+            // หากต้องการเปลี่ยนเส้นทางหลังจากบันทึกสำเร็จ
+            // window.location.href = "URL ที่ต้องการไป";
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error saving calculation:", textStatus, errorThrown);
+            alert("An error occurred while saving the calculation.");
+          }
+        });
       }
+    
       $(document).ready(function () {
-        $("#calculateBtn").click(function () {
+        $("#calculateBtn").click(function (event) {
+          event.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
           saveCalculate();
         });
       });
     </script>
+    
     <!-- main script -->
     <script>
       $(document).ready(function () {
