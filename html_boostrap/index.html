@@ -213,8 +213,40 @@
         // Format number with commas
         function formatNumber(value) {
           $res = value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          if ($res == "") return "0";
           return $res;
+        }
+
+        function formatNumberInput(input) {
+          if (
+            !(input instanceof HTMLInputElement) &&
+            !(input instanceof HTMLTextAreaElement)
+          ) {
+            console.error("The provided element is not an input or textarea.");
+            return;
+          }
+
+          let value = input.value || ""; // ตรวจสอบให้แน่ใจว่า value เป็น string เสมอ
+          let cursorPosition = input.selectionStart;
+
+          // ฟอร์แมตตัวเลข
+          let formattedValue = value
+            .replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+          // คำนวณตำแหน่ง cursor ใหม่
+          let numOfCommasBeforeCursor = (
+            value.slice(0, cursorPosition).match(/,/g) || []
+          ).length;
+          let numOfCommasAfterFormatting = (
+            formattedValue.slice(0, cursorPosition).match(/,/g) || []
+          ).length;
+
+          cursorPosition +=
+            numOfCommasAfterFormatting - numOfCommasBeforeCursor;
+
+          // ตั้งค่า input และตำแหน่ง cursor ใหม่
+          input.value = formattedValue;
+          input.setSelectionRange(cursorPosition, cursorPosition);
         }
 
         // Format number without commas
@@ -263,7 +295,7 @@
           if (
             interestRate === "" ||
             isNaN(interestRate) ||
-            interestRate <= 0 ||
+            interestRate < 2 ||
             interestRate > 99.99
           ) {
             $("#interestRate").parents().eq(0).addClass("input-error");
@@ -319,13 +351,15 @@
           // Display results
           $("#loanAmount").text(formatNumber(loanAmount.toString()));
           $("#minimumIncome").text(formatNumber(minimumIncome.toString()));
-          $("#monthlyPayment").text(formatNumber(monthlyPayment.toString()));
+          let result = formatNumber(monthlyPayment.toString());
+          if (result == "") result = "0";
+          $("#monthlyPayment").text(result);
         }
 
         // Event listeners for input fields
         $("#propertyPrice").on("input", function () {
           ignoreZero(this);
-          $(this).val(formatNumber($(this).val()));
+          formatNumberInput(this);
           validateInput();
         });
 
@@ -345,14 +379,17 @@
 
         // Reset button click event
         $("#resetBtn").click(function () {
+          $("#propertyPrice, #interestRate, #loanTerm").val("0");
           $("#propertyPrice, #interestRate, #loanTerm")
-            .val("")
+            .val("0")
             .removeClass("input-error");
           $(".error-message").hide();
           $("#calculateBtn").prop("disabled", true);
           $(".input-error").removeClass("input-error");
 
           calculateLoan();
+
+          $("#propertyPrice, #interestRate, #loanTerm").val("");
         });
 
         // Calculate button click event
