@@ -1,0 +1,163 @@
+/* General Box Sizing */
+* {
+  box-sizing: border-box;
+  /* border: #000000a8 1px solid; */
+}
+
+/* Root Variables */
+:root {
+  --font-family-base: "Sarabun", sans-serif;
+  --font-color-pink: #e82583;
+  --font-color-grey: #545454;
+}
+
+/* Body Styling */
+body {
+  font-family: var(--font-family-base);
+}
+
+/* Loan Card Styling */
+.loan-card {
+  max-height: 28.25rem; /* 452px */
+  min-height: 24rem; /* 384px */
+}
+
+.card-style {
+  width: 46.1875rem; /* 739px */
+  background-color: #fde9f3;
+  border: 0.125rem solid var(--font-color-pink); /* 2px */
+  border-radius: 1.5rem; /* 24px */
+  padding-top: 0 !important;
+}
+
+/* Main Panel Styling */
+.main-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-panel .calculate {
+  flex-grow: 1;
+}
+
+.main-panel .button-calculate {
+  height: 1.25rem; /* 20px */
+}
+
+.canvas-calculate {
+  flex-grow: 1;
+}
+
+/* Error Message Styling */
+.error-message {
+  color: red;
+  display: none;
+  margin-top: 0.375rem; /* 6px */
+  font-size: 0.75rem; /* 12px */
+}
+
+.input-error .error-message {
+  display: block !important;
+}
+
+.input-error > input {
+  border-color: red !important;
+}
+
+/* Text and Font Styling */
+.title,
+.form-group .text-input {
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500;
+}
+
+.input-error .text-input {
+  color: red !important;
+}
+
+.font-color-pink {
+  color: var(--font-color-pink);
+}
+
+.font-24 {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 600;
+}
+
+.text-info-price {
+  color: var(--font-color-grey);
+  font-size: 1rem; /* 16px */
+  font-weight: 500;
+}
+
+.text-price {
+  color: black;
+  font-size: 2rem; /* 32px */
+  font-weight: 600;
+}
+
+.gradient-green {
+  background: linear-gradient(134.95deg, #24ce75 12.1%, #169bfd 89.38%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Layout and Spacing */
+.top-height {
+  height: 4.25rem; /* 68px */
+  margin-bottom: 1.5rem; /* 24px */
+}
+
+.box-banner {
+  background-color: var(--font-color-pink);
+  width: 6rem; /* 96px */
+  height: 6rem; /* 96px */
+}
+
+.input-panel-style {
+  width: 14.5625rem; /* 233px */
+}
+
+.mr-4 {
+  margin-right: 1.5rem !important; /* 24px */
+}
+
+.x-16 {
+  width: 1rem; /* 16px */
+}
+
+/* Responsive Design */
+@media screen and (max-aspect-ratio: 1/2) {
+  /* CSS สำหรับอุปกรณ์ที่มีอัตราส่วนความกว้าง/ความสูงน้อยกว่า 0.5 */
+  .loan-card {
+    min-height: 47.5625rem !important; /* 761px */
+    justify-content: start;
+    height: 100vh !important;
+    max-height: fit-content !important;
+  }
+  .loan-card .input-panel-style > div {
+    width: 100% !important;
+  }
+  .loan-card .input-panel-style {
+    width: 100% !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+  }
+
+  .main-panel .text-add {
+    display: none;
+  }
+  .main-panel {
+    margin-top: 1.5rem; /* 24px */
+    width: 100% !important;
+    flex-direction: column !important;
+  }
+
+  #resetBtn {
+    min-width: 40% !important;
+  }
+  #calculateBtn {
+    width: 55% !important;
+  }
+}

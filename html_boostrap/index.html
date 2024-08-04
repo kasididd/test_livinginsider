@@ -1,173 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estimated Mortgage Calculator</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mortgage Calculator</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-  <style>
-    :root {
-      --font-color-pink: #E82583;
-    }
+    <!-- Favicon -->
+    <link rel="icon" href="./file/livinginsider_icon.webp" type="image/x-icon" />
 
-    .input-error {
-      border-color: red !important;
-    }
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
 
-    .error-message {
-      color: red;
-      display: none;
-    }
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-    .card-style {
-      width: 739px;
-      height: 384px;
-      background-color: #FDE9F3;
-      border: 2px solid var(--font-color-pink);
-      border-radius: 24px;
-      /* padding: 24px; */
-      padding-top: 0 !important;
-      /* gap: 24px; */
-    }
+    <!-- Bootstrap JS CDN -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
 
-    .font-color-pink {
-      color: var(--font-color-pink);
-    }
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
-    .top-height {
-      height: 68px;
-      margin-bottom: 24px;
-    }
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="bootstrap-custom.css" />
+  </head>
 
-    .box-banner {
-      background-color: var(--font-color-pink);
-      width: 96px;
-      height: 96px;
-    }
-
-    .font-24 {
-      font-size: 24px;
-      font-weight: 600;
-    }
-
-    .input-panel-style {
-      width: 233px;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="container mt-5">
-    <div class="card p-4 card-style">
-      <div class="d-flex flex justify-content-between flex-col top-height">
-        <div class="start pt-4">
-          <div class="font-24">คำนวณสินเชื่ออสังหาฯ เบื้องต้น</div>
-          <div class="flex font-color-pink text-decoration-underline">ข้อเสนอสุดพิเศษสำหรับคุณ <img
-              src="./file/icon_chevron-right_next.svg" alt="icon_chevron-right_next"></div>
-        </div>
-        <div class="end">
-          <div class="box-banner"></div>
-        </div>
-      </div>
-      <div class="flex d-flex flex-row pt-4 input-panel-style">
-        <div class="start">
-          <div class="form-group">
-            <label for="propertyPrice">ราคาอสังหาฯ</label>
-            <input type="text" id="propertyPrice" class="form-control mb-3" placeholder="1,800,000" maxlength="13">
-            <div id="propertyPriceError" class="error-message">กรุณากรอกตัวเลขไม่เกิน 99,999,999,999 และไม่ใช้ทศนิยม
+  <body>
+    <div
+      class="d-flex justify-content-center align-items-center"
+      style="height: 100vh"
+    >
+      <div class="card loan-card p-4 card-style">
+        <div class="d-flex justify-content-between flex-col top-height">
+          <div class="start pt-4">
+            <div class="title-big text-title">
+              คำนวณสินเชื่ออสังหาฯ เบื้องต้น
+            </div>
+            <div
+              class="flex font-color-pink text-decoration-underline text-description"
+            >
+              ข้อเสนอสุดพิเศษสำหรับคุณ
+              <img
+                src="./file/icon_chevron-right_next.svg"
+                alt="icon_chevron-right_next"
+              />
             </div>
           </div>
-          <div class="d-flex flex justify-content-between flex-row">
-            <div class="form-group">
-              <label for="interestRate">อัตราดอกเบี้ย</label>
-              <input type="text" id="interestRate" class="form-control" placeholder="6.5" maxlength="5">
-              <div id="interestRateError" class="error-message">กรุณากรอกตัวเลขไม่เกิน 99.99 และไม่ใช้ทศนิยมเกิน 2
-                ตำแหน่ง
+          <div class="end">
+            <div class="box-banner"></div>
+          </div>
+        </div>
+
+        <div
+          class="flex d-flex flex-row pt-4 input-panel-style w-100"
+          style="max-height: 313px"
+        >
+          <div
+            class="start mr-4 justify-content-between d-flex flex-column"
+            style="width: 233px"
+          >
+            <div class="main-panel">
+              <div class="calculate">
+                <div class="form-group">
+                  <label class="text-input" for="propertyPrice"
+                    >ราคาอสังหาฯ</label
+                  >
+                  <input
+                    type="text"
+                    id="propertyPrice"
+                    class="form-control"
+                    placeholder="0"
+                    maxlength="13"
+                  />
+                  <div class="error-message">กรุณากรอกราคาอสังหาฯ</div>
+                </div>
+                <div
+                  class="d-flex flex-grow-1 justify-content-between flex-row mt-3"
+                >
+                  <div class="form-group w-50">
+                    <label class="text-input" for="interestRate"
+                      >อัตราดอกเบี้ย</label
+                    >
+                    <input
+                      type="text"
+                      id="interestRate"
+                      class="form-control"
+                      placeholder="0"
+                      maxlength="5"
+                    />
+                    <div class="error-message">
+                      อัตราดอกเบี้ยต้องอย่างน้อย 2%
+                    </div>
+                  </div>
+                  <div class="x-16"></div>
+                  <div class="form-group w-50">
+                    <label class="text-input" for="loanTerm">จำนวนปี</label>
+                    <input
+                      type="text"
+                      id="loanTerm"
+                      class="form-control"
+                      placeholder="0"
+                      maxlength="2"
+                    />
+                    <div class="error-message">ระยะเวลากู้ไม่น้อยกว่า 3 ปี</div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="mx-3"></div>
-            <div class="form-group">
-              <label for="loanTerm">จำนวนปี</label>
-              <input type="text" id="loanTerm" class="form-control" placeholder="30" maxlength="2">
-              <div id="loanTermError" class="error-message">กรุณากรอกตัวเลขระหว่าง 3 ถึง 99 ปี</div>
+            <div
+              class="button-calculate d-flex flex flex-row mt-3 justify-content-between"
+            >
+              <button
+                id="resetBtn"
+                class="btn text-button"
+                style="
+                  padding: 0 12px;
+                  color: var(--font-color-pink);
+                  font-size: 16px;
+                  font-weight: 500;
+                "
+              >
+                <img src="./file/icon_retry-arrow.svg" alt="clear" /><span
+                  >ล้างข้อมูล</span
+                >
+              </button>
+              <button
+                id="calculateBtn"
+                class="btn text-button"
+                style="
+                  background-color: var(--font-color-pink);
+                  color: white;
+                  padding: 12px 10px;
+                  font-size: 16px;
+                  font-weight: 500;
+                "
+              >
+                คำนวณสินเชื่อ
+              </button>
             </div>
           </div>
 
+          <div class="main-panel" style="width: 434px">
+            <div class="text-black text-label">
+              ผลคำนวณเงินกู้ <span class="text-add">(กรณีกู้ได้ 100%)</span>
+              <span
+                class="cursor-pointer"
+                id="tooltip-d1"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                title="ตัวเลขที่แสดงจะเป็นตัวเลขเฉพาะการกู้โดยวิธีคำนวณง่ายๆ เงินเดือน 10,000 บาท จะกู้ได้ประมาณ 650,000 บาท"
+              >
+                <img
+                  class="btn"
+                  src="./file/icon_information-circle.svg"
+                  alt="icon_information-circle"
+                />
+              </span>
+              <div
+                class="canvas-calculate border border-2 bg-white rounded-4 w-100 p-4"
+              >
+                <div class="d-flex justify-content-between">
+                  <div class="text-info-price">วงเงินกู้</div>
+                  <div id="loanAmount" class="ml-auto text-price">
+                    1,800,000
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <div class="text-info-price">รายได้ขั้นต่ำต่อเดือน</div>
+                  <div id="minimumIncome" class="ml-auto text-price">
+                    27,692
+                  </div>
+                </div>
+                <hr class="mx-1" />
+                <div class="d-flex justify-content-between">
+                  <div class="text-info-price">ยอดผ่อนต่อเดือน</div>
+                  <div
+                    id="monthlyPayment"
+                    class="ml-auto text-price gradient-green"
+                  >
+                    0
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="end"></div>
       </div>
-      <button id="calculateBtn" class="btn btn-primary" disabled>คำนวณสินเชื่อ</button>
-      <button id="resetBtn" class="btn btn-secondary">ล้างข้อมูล</button>
     </div>
-  </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script>
-    function formatNumber(value) {
-      return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+    <script>
+      $(document).ready(function () {
+        // Initialize tooltip
+        const exampleEl = document.getElementById("tooltip-d1");
+        const tooltip = new bootstrap.Tooltip(exampleEl, {
+          customClass: "custom-tooltip"
+        });
+        $('[data-bs-toggle="tooltip"]').tooltip({});
 
-    function validateInput() {
-      let isValid = true;
+        // Format number with commas
+        function formatNumber(value) {
+          $res = value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          if($res == '') return '0';
+          return $res
+        }
 
-      // Property Price Validation
-      let propertyPrice = $('#propertyPrice').val().replace(/,/g, '');
-      if (propertyPrice === "" || isNaN(propertyPrice) || propertyPrice <= 0 || propertyPrice > 99999999999) {
-        $('#propertyPrice').addClass('input-error');
-        $('#propertyPriceError').show();
-        isValid = false;
-      } else {
-        $('#propertyPrice').removeClass('input-error');
-        $('#propertyPriceError').hide();
-      }
+        // Format number without commas
+        function formatNumberLessThan100(value) {
+          return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, "");
+        }
 
-      // Interest Rate Validation
-      let interestRate = $('#interestRate').val();
-      if (interestRate === "" || isNaN(interestRate) || interestRate <= 0 || interestRate > 99.99) {
-        $('#interestRate').addClass('input-error');
-        $('#interestRateError').show();
-        isValid = false;
-      } else {
-        $('#interestRate').removeClass('input-error');
-        $('#interestRateError').hide();
-      }
+        // Validate input fields
+        function validateInput() {
+          let isValid = true;
 
-      // Loan Term Validation
-      let loanTerm = $('#loanTerm').val();
-      if (loanTerm === "" || isNaN(loanTerm) || loanTerm < 3 || loanTerm > 99) {
-        $('#loanTerm').addClass('input-error');
-        $('#loanTermError').show();
-        isValid = false;
-      } else {
-        $('#loanTerm').removeClass('input-error');
-        $('#loanTermError').hide();
-      }
+          // Property Price Validation
+          let propertyPrice = $("#propertyPrice").val().replace(/,/g, "");
+          if (
+            propertyPrice === "" ||
+            isNaN(propertyPrice) ||
+            propertyPrice <= 0 ||
+            propertyPrice > 99999999999
+          ) {
+            $("#propertyPrice").parents().eq(0).addClass("input-error");
+            isValid = false;
+          } else {
+            $("#propertyPrice").parents().eq(0).removeClass("input-error");
+          }
 
-      $('#calculateBtn').prop('disabled', !isValid);
-    }
+          // Interest Rate Validation
+          let interestRate = $("#interestRate").val();
+          if (
+            interestRate === "" ||
+            isNaN(interestRate) ||
+            interestRate <= 0 ||
+            interestRate > 99.99
+          ) {
+            $("#interestRate").parents().eq(0).addClass("input-error");
+            isValid = false;
+          } else {
+            $("#interestRate").parents().eq(0).removeClass("input-error");
+          }
 
-    $(document).ready(function () {
-      $('#propertyPrice').on('input', function () {
-        $(this).val(formatNumber($(this).val()));
+          // Loan Term Validation
+          let loanTerm = $("#loanTerm").val();
+          if (
+            loanTerm === "" ||
+            isNaN(loanTerm) ||
+            loanTerm < 3 ||
+            loanTerm > 99
+          ) {
+            $("#loanTerm").parents().eq(0).addClass("input-error");
+            isValid = false;
+          } else {
+            $("#loanTerm").parents().eq(0).removeClass("input-error");
+          }
+
+          $("#calculateBtn").prop("disabled", !isValid);
+        }
+
+        // Ignore leading zero
+        function ignoreZero(param) {
+          if ($(param).val()[0] == 0) $(param).val("");
+        }
+
+        // Calculate loan details
+        function calculateLoan() {
+          let propertyPrice = parseFloat(
+            $("#propertyPrice").val().replace(/,/g, "")
+          );
+          let interestRate = parseFloat($("#interestRate").val());
+          let loanTerm = parseFloat($("#loanTerm").val());
+
+          // Calculate loan amount
+          let loanAmount = propertyPrice;
+
+          // Calculate minimum income
+          let minimumIncome = Math.round((propertyPrice / 650000) * 10000);
+
+          // Calculate monthly payment
+          let monthlyInterestRate = interestRate / 100 / 12;
+          let numberOfPayments = loanTerm * 12;
+          let monthlyPayment = Math.round(
+            (loanAmount * monthlyInterestRate) /
+              (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments))
+          );
+
+          // Display results
+          $("#loanAmount").text(formatNumber(loanAmount.toString()));
+          $("#minimumIncome").text(formatNumber(minimumIncome.toString()));
+          $("#monthlyPayment").text(formatNumber(monthlyPayment.toString()));
+        }
+
+        // Event listeners for input fields
+        $("#propertyPrice").on("input", function () {
+          ignoreZero(this);
+          $(this).val(formatNumber($(this).val()));
+          validateInput();
+        });
+
+        $("#interestRate").on("input", function () {
+          if (parseFloat($(this).val()) > 99.99) $(this).val("99.99");
+        });
+
+        $("#loanTerm").on("input", function () {
+          $(this).val(formatNumberLessThan100($(this).val()));
+        });
+
+        $("#interestRate, #loanTerm").on("input", function () {
+          ignoreZero(this);
+          validateInput();
+        });
+
+        // Reset button click event
+        $("#resetBtn").click(function () {
+          $("#propertyPrice, #interestRate, #loanTerm")
+            .val("")
+            .removeClass("input-error");
+          $(".error-message").hide();
+          $("#calculateBtn").prop("disabled", true);
+          calculateLoan();
+        });
+
+        // Calculate button click event
+        $("#calculateBtn").click(function () {
+          calculateLoan();
+        });
+
+        // Set default values
+        $("#propertyPrice").val("15,000,000").trigger("input");
+        $("#interestRate").val("6.5");
+        $("#loanTerm").val("30");
         validateInput();
+        calculateLoan();
       });
-
-      $('#interestRate, #loanTerm').on('input', function () {
-        validateInput();
-      });
-
-      $('#resetBtn').click(function () {
-        $('#propertyPrice, #interestRate, #loanTerm').val('').removeClass('input-error');
-        $('.error-message').hide();
-        $('#calculateBtn').prop('disabled', true);
-      });
-    });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

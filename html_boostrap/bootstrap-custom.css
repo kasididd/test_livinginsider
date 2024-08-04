@@ -1,0 +1,11 @@
+.custom-tooltip .tooltip-inner {
+  opacity: 1;
+  background-color : black;
+  max-width: 220px;
+  font-size : 12px;
+  font-weight: 400;
+  text-align: start;
+}
+.custom-tooltip {
+  opacity: 1 !important;
+}
