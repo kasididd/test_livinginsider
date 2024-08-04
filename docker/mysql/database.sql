@@ -2,27 +2,18 @@
 CREATE DATABASE IF NOT EXISTS db;
 USE db;
 
--- สร้างตาราง users
-CREATE TABLE IF NOT EXISTS loan_table (
-    StudentID INT NOT NULL AUTO_INCREMENT,
-    FirstName VARCHAR(100) NOT NULL,
-    Surname VARCHAR(100) NOT NULL,
-    PRIMARY KEY (StudentID)
+-- สร้างตาราง 
+CREATE TABLE loan_calculations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    property_price DECIMAL(13,2) NOT NULL,
+    interest_rate DECIMAL(5,2) NOT NULL,
+    loan_term INT NOT NULL,
+    loan_amount DECIMAL(13,2) NOT NULL,
+    minimum_income DECIMAL(13,2) NOT NULL,
+    monthly_payment DECIMAL(13,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- เพิ่มข้อมูลตัวอย่าง
-INSERT INTO loan_table (FirstName, Surname)
-VALUES
-    ('John', 'Anderson'),
-    ('Emma', 'Smith'),
-    ('Michael', 'Brown'),
-    ('Jessica', 'Davis'),
-    ('David', 'Miller'),
-    ('Emily', 'Wilson'),
-    ('Daniel', 'Moore'),
-    ('Sophia', 'Taylor'),
-    ('James', 'Anderson'),
-    ('Isabella', 'Thomas');
 
 -- กำหนดสิทธิ์การเข้าถึง
 GRANT ALL PRIVILEGES ON db.* TO 'root'@'%' IDENTIFIED BY 'root';

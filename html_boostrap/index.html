@@ -221,6 +221,24 @@
         function formatNumberLessThan100(value) {
           return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, "");
         }
+        function formatNumberLessThan100AndDot(value) {
+          // ลบตัวอักษรที่ไม่ใช่ตัวเลขและจุดทศนิยม
+          let cleanedValue = value.replace(/[^\d.]/g, "");
+
+          // แยกส่วนของจุดทศนิยม
+          let parts = cleanedValue.split(".");
+
+          // จัดรูปแบบส่วนที่เป็นตัวเลขก่อนจุดทศนิยม
+          parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, "");
+
+          // จำกัดส่วนทศนิยมให้มีแค่ 2 ตำแหน่ง
+          if (parts[1]) {
+            parts[1] = parts[1].substring(0, 2);
+          }
+
+          // รวมส่วนที่เป็นตัวเลขก่อนและหลังจุดทศนิยม
+          return parts.join(".");
+        }
 
         // Validate input fields
         function validateInput() {
@@ -313,6 +331,7 @@
 
         $("#interestRate").on("input", function () {
           if (parseFloat($(this).val()) > 99.99) $(this).val("99.99");
+          $(this).val(formatNumberLessThan100AndDot($(this).val()));
         });
 
         $("#loanTerm").on("input", function () {
@@ -331,6 +350,8 @@
             .removeClass("input-error");
           $(".error-message").hide();
           $("#calculateBtn").prop("disabled", true);
+          $(".input-error").removeClass("input-error");
+
           calculateLoan();
         });
 
@@ -340,7 +361,7 @@
         });
 
         // Set default values
-        $("#propertyPrice").val("15,000,000").trigger("input");
+        $("#propertyPrice").val("1,800,000").trigger("input");
         $("#interestRate").val("6.5");
         $("#loanTerm").val("30");
         validateInput();

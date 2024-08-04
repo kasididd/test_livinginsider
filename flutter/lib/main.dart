@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:google_fonts/google_fonts.dart';
+import 'package:mortgage_calculator/chart.dart';
+import 'api_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,161 +12,93 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Estimated Mortgage Calculator',
-    theme: ThemeData(
-      primarySwatch: Colors.pink,
-      // textTheme: GoogleFonts.sarabunTextTheme(),
-    ),
-      home: const MortgageCalculator(),
+      title: 'Mortgage Dashboard',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const LoanListScreen(),
     );
   }
 }
 
-class MortgageCalculator extends StatefulWidget {
-  const MortgageCalculator({super.key});
+class LoanListScreen extends StatefulWidget {
+  const LoanListScreen({super.key});
 
   @override
-  _MortgageCalculatorState createState() => _MortgageCalculatorState();
+  _LoanListScreenState createState() => _LoanListScreenState();
 }
 
-class _MortgageCalculatorState extends State<MortgageCalculator> {
-  final _propertyPriceController = TextEditingController();
-  final _interestRateController = TextEditingController();
-  final _loanTermController = TextEditingController();
-
-  double _loanAmount = 0;
-  double _minimumIncome = 0;
-  double _monthlyPayment = 0;
+class _LoanListScreenState extends State<LoanListScreen> {
+  late Future<List<Loan>> futureLoans;
 
   @override
-  void dispose() {
-    _propertyPriceController.dispose();
-    _interestRateController.dispose();
-    _loanTermController.dispose();
-    super.dispose();
-  }
-
-  void _calculateLoan() {
-    final propertyPrice = double.tryParse(_propertyPriceController.text.replaceAll(',', '')) ?? 0;
-    final interestRate = double.tryParse(_interestRateController.text) ?? 0;
-    final loanTerm = double.tryParse(_loanTermController.text) ?? 0;
-
-    if (propertyPrice > 0 && interestRate > 0 && loanTerm > 0) {
-      setState(() {
-        _loanAmount = propertyPrice;
-        _minimumIncome = (propertyPrice / 650000) * 10000;
-        final monthlyInterestRate = interestRate / 100 / 12;
-        final numberOfPayments = loanTerm * 12;
-        _monthlyPayment = (propertyPrice * monthlyInterestRate) / (1 - (1 / (1 + monthlyInterestRate) * (numberOfPayments)));
-      });
-    }
-  }
-
-  void _resetFields() {
-    _propertyPriceController.clear();
-    _interestRateController.clear();
-    _loanTermController.clear();
-    setState(() {
-      _loanAmount = 0;
-      _minimumIncome = 0;
-      _monthlyPayment = 0;
-    });
+  void initState() {
+    super.initState();
+    futureLoans = ApiService().fetchLoans();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Estimated Mortgage Calculator'),
+        title: const Text('Mortgage Dashboard'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _propertyPriceController,
-              decoration: const InputDecoration(
-                labelText: 'ราคาอสังหาฯ',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              onChanged: (_) => _calculateLoan(),
-            ),
-            const SizedBox(height: 16),
-            Row(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: _interestRateController,
-                    decoration: const InputDecoration(
-                      labelText: 'อัตราดอกเบี้ย',
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    onChanged: (_) => _calculateLoan(),
-                  ),
+                FutureBuilder<List<Loan>>(
+                  future: futureLoans,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<Loan>? data = snapshot.data;
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: data?.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              title: Text('Property Price: ${data![index].propertyPrice}'),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text('Interest Rate: ${data[index].interestRate}%'),
+                                        Text('Loan Term: ${data[index].loanTerm} years'),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                                                        Text('Loan Amount: ${data[index].loanAmount}'),
+                                    Text('Minimum Income: ${data[index].minimumIncome}'),
+                                    Text('Monthly Payment: ${data[index].monthlyPayment}'),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    return const CircularProgressIndicator();
+                  },
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: TextField(
-                    controller: _loanTermController,
-                    decoration: const InputDecoration(
-                      labelText: 'จำนวนปี',
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    onChanged: (_) => _calculateLoan(),
-                  ),
-                ),
+              const DashboardScreen()
               ],
             ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: _resetFields,
-                  icon: SvgPicture.asset('assets/icon_retry-arrow.svg'),
-                  label: const Text('ล้างข้อมูล'),
-                ),
-                ElevatedButton(
-                  onPressed: _calculateLoan,
-                  child: const Text('คำนวณสินเชื่อ'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('ผลคำนวณเงินกู้ (กรณีกู้ได้ 100%)'),
-                    const SizedBox(height: 8),
-                    _buildResultRow('วงเงินกู้', _loanAmount),
-                    _buildResultRow('รายได้ขั้นต่ำต่อเดือน', _minimumIncome),
-                    _buildResultRow('ยอดผ่อนต่อเดือน', _monthlyPayment),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
-    );
-  }
-
-  Widget _buildResultRow(String label, double value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(label),
-        Text(value.toStringAsFixed(2)),
-      ],
     );
   }
 }

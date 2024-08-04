@@ -201,6 +201,33 @@
       </div>
     </div>
 
+    <form
+      id="mortgageForm"
+      method="POST"
+      action="./backend/save_calculation.php"
+    >
+      <input type="hidden" name="propertyPrice" id="formPropertyPrice" />
+      <input type="hidden" name="interestRate" id="formInterestRate" />
+      <input type="hidden" name="loanTerm" id="formLoanTerm" />
+      <input type="hidden" name="loanAmount" id="formLoanAmount" />
+      <input type="hidden" name="minimumIncome" id="formMinimumIncome" />
+      <input type="hidden" name="monthlyPayment" id="formMonthlyPayment" />
+      <button
+        type="submit"
+        id="calculateBtn"
+        class="btn text-button"
+        style="
+          background-color: var(--font-color-pink);
+          color: white;
+          padding: 12px 10px;
+          font-size: 16px;
+          font-weight: 500;
+        "
+      >
+        คำนวณสินเชื่อ
+      </button>
+    </form>
+
     <script>
       $(document).ready(function () {
         // Initialize tooltip
@@ -220,6 +247,24 @@
         // Format number without commas
         function formatNumberLessThan100(value) {
           return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, "");
+        }
+        function formatNumberLessThan100AndDot(value) {
+          // ลบตัวอักษรที่ไม่ใช่ตัวเลขและจุดทศนิยม
+          let cleanedValue = value.replace(/[^\d.]/g, "");
+
+          // แยกส่วนของจุดทศนิยม
+          let parts = cleanedValue.split(".");
+
+          // จัดรูปแบบส่วนที่เป็นตัวเลขก่อนจุดทศนิยม
+          parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, "");
+
+          // จำกัดส่วนทศนิยมให้มีแค่ 2 ตำแหน่ง
+          if (parts[1]) {
+            parts[1] = parts[1].substring(0, 2);
+          }
+
+          // รวมส่วนที่เป็นตัวเลขก่อนและหลังจุดทศนิยม
+          return parts.join(".");
         }
 
         // Validate input fields
@@ -313,6 +358,7 @@
 
         $("#interestRate").on("input", function () {
           if (parseFloat($(this).val()) > 99.99) $(this).val("99.99");
+          $(this).val(formatNumberLessThan100AndDot($(this).val()));
         });
 
         $("#loanTerm").on("input", function () {
@@ -331,16 +377,36 @@
             .removeClass("input-error");
           $(".error-message").hide();
           $("#calculateBtn").prop("disabled", true);
+          $(".input-error").removeClass("input-error");
+
           calculateLoan();
         });
 
         // Calculate button click event
         $("#calculateBtn").click(function () {
           calculateLoan();
+          saveCalculate();
         });
 
+        function saveCalculate() {
+          $("#formPropertyPrice").val(
+            $("#propertyPrice").val().replace(/,/g, "")
+          );
+          $("#formInterestRate").val($("#interestRate").val());
+          $("#formLoanTerm").val($("#loanTerm").val());
+          $("#formLoanAmount").val($("#loanAmount").text().replace(/,/g, ""));
+          $("#formMinimumIncome").val(
+            $("#minimumIncome").text().replace(/,/g, "")
+          );
+          $("#formMonthlyPayment").val(
+            $("#monthlyPayment").text().replace(/,/g, "")
+          );
+
+          $("#mortgageForm").submit();
+        }
+
         // Set default values
-        $("#propertyPrice").val("15,000,000").trigger("input");
+        $("#propertyPrice").val("1,800,000").trigger("input");
         $("#interestRate").val("6.5");
         $("#loanTerm").val("30");
         validateInput();
