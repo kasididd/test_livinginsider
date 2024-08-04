@@ -1,12 +1,12 @@
 <?php
 // echo "connection";
 
-$conn =new mysqli("db","root","root","pdfdb");
+$conn =new mysqli("db","root","root","db");
 
 // echo ($conn);
 // $output = $conn->query("SELECT * FROM studens");
 // echo $result;
-$query =  $conn->query("SELECT * FROM users");
+$query =  $conn->query("SELECT * FROM loan_table");
 $result = array();
    while($rowData = $query->fetch_assoc()){
        $result[] = $rowData; 
