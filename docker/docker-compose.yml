@@ -1,0 +1,34 @@
+services:
+  db:
+    image: mysql:8.0.32
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d/:ro
+      - ./mysql-data:/var/lib/mysql
+    environment: 
+      TZ: Asia/Bangkok
+      MYSQL_DATABASE: 'mysql'
+      MYSQL_USER: 'root'
+      MYSQL_ROOT_PASSWORD: 'BANANA'
+    ports:
+      - '3306:3306'
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    environment: 
+      TZ: Asia/Bangkok   
+   
+  php:
+    build: 
+        context: ./php/
+        dockerfile: Dockerfile
+    environment: 
+      TZ: Asia/Bangkok
+    ports:
+     - 80:80
+    volumes:
+     - ./php/src:/var/www/html/
