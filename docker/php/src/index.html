@@ -212,18 +212,7 @@
       <input type="hidden" name="loanAmount" id="formLoanAmount" />
       <input type="hidden" name="minimumIncome" id="formMinimumIncome" />
       <input type="hidden" name="monthlyPayment" id="formMonthlyPayment" />
-      <button
-        type="submit"
-        id="calculateBtn"
-        class="btn text-button"
-        style="
-          background-color: var(--font-color-pink);
-          color: white;
-          padding: 12px 10px;
-          font-size: 16px;
-          font-weight: 500;
-        "
-      >
+      <button type="submit" id="calculateBtn" style="display: none">
         คำนวณสินเชื่อ
       </button>
     </form>
@@ -238,23 +227,23 @@
           minimumIncome: $("#minimumIncome").text().replace(/,/g, ""),
           monthlyPayment: $("#monthlyPayment").text().replace(/,/g, "")
         };
-    
+
         $.ajax({
           url: $("#mortgageForm").attr("action"), // URL ของฟอร์ม
           type: "POST",
           data: data,
-          success: function(response) {
+          success: function (response) {
             alert("Calculation saved successfully.");
             // หากต้องการเปลี่ยนเส้นทางหลังจากบันทึกสำเร็จ
             // window.location.href = "URL ที่ต้องการไป";
           },
-          error: function(jqXHR, textStatus, errorThrown) {
+          error: function (jqXHR, textStatus, errorThrown) {
             console.error("Error saving calculation:", textStatus, errorThrown);
             alert("An error occurred while saving the calculation.");
           }
         });
       }
-    
+
       $(document).ready(function () {
         $("#calculateBtn").click(function (event) {
           event.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
@@ -262,7 +251,7 @@
         });
       });
     </script>
-    
+
     <!-- main script -->
     <script>
       $(document).ready(function () {
