@@ -24,7 +24,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       future: futureLoans,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: Padding(
+            padding: EdgeInsets.only(top:200.0),
+            child: CircularProgressIndicator(),
+          ));
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

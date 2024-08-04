@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mortgage_calculator/chart.dart';
 import 'api_service.dart';
@@ -17,7 +18,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoanListScreen(),
+      home:  ScrollConfiguration(
+        behavior: MyCustomScrollBehavior(),
+        child: const LoanListScreen()),
     );
   }
 }
@@ -56,6 +59,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                     if (snapshot.hasData) {
                       List<Loan>? data = snapshot.data;
                       return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: data?.length,
                         itemBuilder: (context, index) {
@@ -101,4 +105,12 @@ class _LoanListScreenState extends State<LoanListScreen> {
       ),
     );
   }
+}
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+  };
 }
