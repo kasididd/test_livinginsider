@@ -1,5 +1,20 @@
 # test_livinginsider
 [GitHub link Clik](https://github.com/kasididd/test_livinginsider)
+
+
+<!-- lastest -->
+
+สามารถเข้าไปดู Demo ได้ที่ [https://www.wansudon.site/]
+
+#เพิ่มเติม(ShowCase)
+สามารถเข้าไปดูข้อมูล Flutter Dashboard คร่าวๆได้ที่ [https://dashboard.wansudon.site/]
+
+เมื่อกด คำนวณสินเชื่อผมได้ทำการส่งข้อมูลเข้า PHP API Storage to SQL สามารถดู ฐานข้อมูลได้ที่ [http://34.87.76.190:8081/]
+
+**ใช้ vm ที่มีประสิทธิภาพสูงของ Google ราคาอยู่ที่ $178(6,326.12 บาท)/month**
+**ใช้ cer ของ certbot ยืนยันความเป็นเจ้าของผ่าน email** ref [https://shorturl.at/KQTea]
+
+<!-- old -->
 สามารถเข้าไปดู Demo ได้ที่ [http://www.wansudon.site/]
 
 #เพิ่มเติม(ShowCase)
