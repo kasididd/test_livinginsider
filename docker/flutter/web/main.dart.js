@@ -72506,7 +72506,7 @@ A.CW.prototype={
 rN(){var s=0,r=A.a0(t.CF),q,p,o
 var $async$rN=A.a1(function(a,b){if(a===1)return A.Y(b,r)
 while(true)switch(s){case 0:s=3
-return A.a9(A.aEa(A.hO("http://34.163.150.173/backend/get_loan.php")),$async$rN)
+return A.a9(A.aEa(A.hO("https://wansudon.site/backend/get_loan.php")),$async$rN)
 case 3:o=b
 if(o.b===200){p=J.oC(B.dd.eT(0,A.aDY(A.aBA(o.e).c.a.i(0,"charset")).eT(0,o.w)),new A.Ug(),t.Iw)
 q=A.a6(p,!0,p.$ti.h("aA.E"))

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:mortgage_calculator/config.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://$server/backend/get_loan.php';
+  static const String baseUrl = 'https://$server/backend/get_loan.php';
 
   Future<List<Loan>> fetchLoans() async {
     final response = await http.get(Uri.parse(baseUrl));
