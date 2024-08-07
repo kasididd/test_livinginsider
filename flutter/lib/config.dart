@@ -1,1 +1,1 @@
-const server = "wansudon.site";
+const server = "m.wansudon.site";
