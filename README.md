@@ -47,3 +47,62 @@ Database  : db
 จึงไม่ได้ใช้ Firebase ดังนั้นจึงเลือก stack ที่เป็น google VM แทนเพื่อความเหมาะสมครับ
 
 ปล. หากมีข้อผิดพลาดประการใดขออภัยเป็นอย่างสูง หวังอย่างยิ่งว่าจะได้ร่วมงานกันครับ
+
+
+-- setup
+sudo apt-get install apache2
+sudo apt-get install apache2-utils
+sudo apt install git docker-compose docker certbot python3-certbot-apache
+sudo git clone https://github.com/kasididd/test_livinginsider.git
+sudo a2enmod proxy_http
+sudo a2enmod proxy_balancer
+sudo a2enmod proxy_wstunnel
+sudo systemctl restart apache2 ufw
+
+sudo mv /etc/apache2/sites-available/000-default.conf  /etc/apache2/sites-available/origdefault.backup
+sudo nano /etc/apache2/sites-available/app.conf
+
+  <VirtualHost *:443>
+
+     ServerName main.wansudon.site
+
+     ProxyPreserveHost On
+     ProxyPass / http://127.0.0.1:888/
+     ProxyPassReverse / http://127.0.0.1:888/
+
+  </VirtualHost>
+  <VirtualHost *:443>
+
+     ServerName dash.wansudon.site
+
+     ProxyPreserveHost On
+     ProxyPass / http://127.0.0.1:8080/
+     ProxyPassReverse / http://127.0.0.1:8080/
+
+  </VirtualHost>
+
+sudo ln -s /etc/apache2/sites-available/app.conf  /etc/apache2/sites-enabled/app.conf
+sudo apachectl configtest
+sudo service apache2 restart
+
+-> set 35.185.143.73 -> dns a-record
+
+sudo ufw allow 443/tcp
+sudo ufw reload
+
+sudo certbot -d main.wansudon.site
+
+sudo certbot -d dash.wansudon.site
+
+sudo certbot renew --dry-run
+
+sudo nano /etc/apache2/sites-enabled/app.conf
+
+cd test_livinginsider/docker/
+sudo docker-compose up -d
+
+-  config flutter server_url
+
+-  git commit
+
+sudo git pull
