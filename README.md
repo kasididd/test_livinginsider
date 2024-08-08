@@ -14,7 +14,7 @@
 **ใช้ vm ที่มีประสิทธิภาพสูงของ Google ราคาอยู่ที่ $178(6,326.12 บาท)/month**
 **ใช้ cer ของ certbot ยืนยันความเป็นเจ้าของผ่าน email** ref [https://shorturl.at/KQTea]
 
---- mini server ---
+--- mini server ใช้ไม่ได้ v-core-0.5 ram น้อยเกินไป 600 mb ---
 สามารถเข้าไปดู Demo ได้ที่ [https://m.wansudon.site/]
 
 สามารถเข้าไปดูข้อมูล Flutter Dashboard คร่าวๆได้ที่ [https://d.wansudon.site/]
@@ -25,6 +25,14 @@
 **ใช้ cer ของ certbot ยืนยันความเป็นเจ้าของผ่าน email** ref [https://shorturl.at/KQTea]
 
 
+--- mini-3 server ใช้ได้ลื่่นไหลดี v-core-1 ram 1.7GB ---
+สามารถเข้าไปดู Demo ได้ที่ [https://main.wansudon.site/]
+
+สามารถเข้าไปดูข้อมูล Flutter Dashboard คร่าวๆได้ที่ [https://dash.wansudon.site/]
+
+เมื่อกด คำนวณสินเชื่อผมได้ทำการส่งข้อมูลเข้า PHP API Storage to SQL สามารถดู ฐานข้อมูลได้ที่ [http://35.185.143.73:8081/]
+
+**ใช้ vm ที่มีประสิทธิภาพต่ำสุดของ Google ราคาอยู่ที่ $15.53(548.25 บาท)/month**
 
 <!-- old -->
 สามารถเข้าไปดู Demo ได้ที่ [http://www.wansudon.site/]
